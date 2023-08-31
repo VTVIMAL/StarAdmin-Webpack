@@ -1,0 +1,1 @@
+import{defineCustomElement}from"./ionicons.core.js";import{COMPONENTS}from"./ionicons.components.js";export function defineCustomElements(e,o){return defineCustomElement(e,COMPONENTS,o)}

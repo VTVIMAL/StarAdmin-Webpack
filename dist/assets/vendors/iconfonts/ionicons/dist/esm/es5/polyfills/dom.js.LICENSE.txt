@@ -1,0 +1,13 @@
+/*!
+Element.closest and Element.matches
+https://github.com/jonathantneal/closest
+Creative Commons Zero v1.0 Universal
+*/
+
+/*!
+Element.getRootNode()
+*/
+
+/*! document-register-element, 1.7.0
+https://github.com/WebReflection/document-register-element
+(C) Andrea Giammarchi - @WebReflection - Mit Style License */

@@ -1,0 +1,5 @@
+/*!
+url-polyfill, 1.0.14
+https://github.com/lifaon74/url-polyfill
+MIT Licensed
+*/

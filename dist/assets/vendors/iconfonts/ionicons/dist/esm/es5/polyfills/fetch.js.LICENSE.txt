@@ -1,0 +1,5 @@
+/*!
+whatwg-fetch, 2.0.3
+https://github.com/github/fetch
+Copyright (c) 2014-2016 GitHub, Inc. - MIT License
+*/

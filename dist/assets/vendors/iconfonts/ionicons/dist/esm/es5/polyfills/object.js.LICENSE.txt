@@ -1,0 +1,15 @@
+/*!
+Number
+*/
+
+/*!
+Object.assign
+*/
+
+/*!
+Object.entries
+*/
+
+/*!
+Object.values
+*/

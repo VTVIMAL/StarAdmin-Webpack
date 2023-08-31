@@ -1,0 +1,11 @@
+/*!
+String.prototype.endsWith
+*/
+
+/*!
+String.prototype.includes
+*/
+
+/*!
+String.prototype.startsWith
+*/
