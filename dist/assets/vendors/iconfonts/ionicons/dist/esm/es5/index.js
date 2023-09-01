@@ -1,1 +1,2 @@
-export*from"./build/index.js";
+// ionicons: ES Module
+export * from './build/index.js';

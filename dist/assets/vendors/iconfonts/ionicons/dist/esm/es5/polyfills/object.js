@@ -1,2 +1,20 @@
-/*! For license information please see object.js.LICENSE.txt */
-export function applyPolyfill(e,n){"function"!=typeof Object.assign&&Object.defineProperty(Object,"assign",{value:function(e,n){if(null==e)throw new TypeError("Cannot convert undefined or null to object");for(var t=Object(e),r=1;r<arguments.length;r++){var i=arguments[r];if(null!=i)for(var o in i)Object.prototype.hasOwnProperty.call(i,o)&&(t[o]=i[o])}return t},writable:!0,configurable:!0}),Object.entries||(Object.entries=function(e){for(var n=Object.keys(e),t=n.length,r=Array(t);t--;)r[t]=[n[t],e[n[t]]];return r}),Object.values||(Object.values=function(e){return Object.keys(e).map((function(n){return e[n]}))}),void 0===Number.isFinite&&(Number.isFinite=function(e){return"number"==typeof e&&isFinite(e)}),Number.isNaN=Number.isNaN||function(e){return e!=e},Number.isInteger=Number.isInteger||function(e){return"number"==typeof e&&isFinite(e)&&Math.floor(e)===e}}
+export function applyPolyfill(window, document) {/*!
+Object.assign
+*/
+"function"!=typeof Object.assign&&Object.defineProperty(Object,"assign",{value:function(d,f){if(null==d)throw new TypeError("Cannot convert undefined or null to object");for(var e=Object(d),b=1;b<arguments.length;b++){var a=arguments[b];if(null!=a)for(var c in a)Object.prototype.hasOwnProperty.call(a,c)&&(e[c]=a[c])}return e},writable:!0,configurable:!0});
+/*!
+Object.entries
+*/
+Object.entries||(Object.entries=function(c){for(var b=Object.keys(c),a=b.length,d=Array(a);a--;)d[a]=[b[a],c[b[a]]];return d});
+/*!
+Object.values
+*/
+Object.values||(Object.values=function(n){return Object.keys(n).map(function(r){return n[r]})});
+
+/*!
+Number
+*/
+void 0===Number.isFinite&&(Number.isFinite=function(a){return"number"===typeof a&&isFinite(a)});
+Number.isNaN=Number.isNaN||function(a){return a!==a};
+Number.isInteger=Number.isInteger||function(a){return"number"===typeof a&&isFinite(a)&&Math.floor(a)===a};
+}

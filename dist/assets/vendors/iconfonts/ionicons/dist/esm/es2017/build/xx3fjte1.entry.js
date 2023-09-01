@@ -1,1 +1,226 @@
-import{h}from"../ionicons.core.js";import{a as getName,b as isSrc,c as getSrc,d as getIconMap,e as isValid}from"./chunk-1ca7e569.js";class Icon{constructor(){this.isVisible=!1,this.lazy=!1}componentWillLoad(){this.waitUntilVisible(this.el,"50px",(()=>{this.isVisible=!0,this.loadIcon()}))}componentDidUnload(){this.io&&(this.io.disconnect(),this.io=void 0)}waitUntilVisible(t,o,i){if(this.lazy&&this.win&&this.win.IntersectionObserver){const e=this.io=new this.win.IntersectionObserver((t=>{t[0].isIntersecting&&(e.disconnect(),this.io=void 0,i())}),{rootMargin:o});e.observe(t)}else i()}loadIcon(){if(!this.isServer&&this.isVisible){const t=this.getUrl();t?getSvgContent(this.doc,t,"s-ion-icon").then((t=>this.svgContent=t)):console.error("icon was not resolved")}if(!this.ariaLabel){const t=getName(this.getName(),this.mode,this.ios,this.md);t&&(this.ariaLabel=t.replace("ios-","").replace("md-","").replace(/\-/g," "))}}getName(){return void 0!==this.name?this.name:this.icon&&!isSrc(this.icon)?this.icon:void 0}getUrl(){let t=getSrc(this.src);return t||(t=getName(this.getName(),this.mode,this.ios,this.md),t?this.getNamedUrl(t):(t=getSrc(this.icon),t||null))}getNamedUrl(t){return getIconMap().get(t)||`${this.resourcesUrl}svg/${t}.svg`}hostData(){const t=this.mode||"md",o=this.flipRtl||this.ariaLabel&&this.ariaLabel.indexOf("arrow")>-1&&!1!==this.flipRtl;return{role:"img",class:Object.assign({[`${t}`]:!0},createColorClasses(this.color),{[`icon-${this.size}`]:!!this.size,"flip-rtl":o&&"rtl"===this.doc.dir})}}render(){return!this.isServer&&this.svgContent?h("div",{class:"icon-inner",innerHTML:this.svgContent}):h("div",{class:"icon-inner"})}static get is(){return"ion-icon"}static get encapsulation(){return"shadow"}static get properties(){return{ariaLabel:{type:String,attr:"aria-label",reflectToAttr:!0,mutable:!0},color:{type:String,attr:"color"},doc:{context:"document"},el:{elementRef:!0},flipRtl:{type:Boolean,attr:"flip-rtl"},icon:{type:String,attr:"icon",watchCallbacks:["loadIcon"]},ios:{type:String,attr:"ios"},isServer:{context:"isServer"},isVisible:{state:!0},lazy:{type:Boolean,attr:"lazy"},md:{type:String,attr:"md"},mode:{type:String,attr:"mode"},name:{type:String,attr:"name",watchCallbacks:["loadIcon"]},resourcesUrl:{context:"resourcesUrl"},size:{type:String,attr:"size"},src:{type:String,attr:"src",watchCallbacks:["loadIcon"]},svgContent:{state:!0},win:{context:"window"}}}static get style(){return":host{display:inline-block;width:1em;height:1em;contain:strict;fill:currentColor;-webkit-box-sizing:content-box!important;box-sizing:content-box!important}.icon-inner,svg{display:block;height:100%;width:100%}:host(.flip-rtl) .icon-inner{-webkit-transform:scaleX(-1);transform:scaleX(-1)}:host(.icon-small){font-size:18px!important}:host(.icon-large){font-size:32px!important}:host(.ion-color){color:var(--ion-color-base)!important}:host(.ion-color-primary){--ion-color-base:var(--ion-color-primary,#3880ff)}:host(.ion-color-secondary){--ion-color-base:var(--ion-color-secondary,#0cd1e8)}:host(.ion-color-tertiary){--ion-color-base:var(--ion-color-tertiary,#f4a942)}:host(.ion-color-success){--ion-color-base:var(--ion-color-success,#10dc60)}:host(.ion-color-warning){--ion-color-base:var(--ion-color-warning,#ffce00)}:host(.ion-color-danger){--ion-color-base:var(--ion-color-danger,#f14141)}:host(.ion-color-light){--ion-color-base:var(--ion-color-light,#f4f5f8)}:host(.ion-color-medium){--ion-color-base:var(--ion-color-medium,#989aa2)}:host(.ion-color-dark){--ion-color-base:var(--ion-color-dark,#222428)}"}}const requests=new Map;function getSvgContent(t,o,i){let e=requests.get(o);return e||(e=fetch(o,{cache:"force-cache"}).then((t=>isStatusValid(t.status)?t.text():Promise.resolve(null))).then((o=>validateContent(t,o,i))),requests.set(o,e)),e}function isStatusValid(t){return t<=299}function validateContent(t,o,i){if(o){const e=t.createDocumentFragment(),s=t.createElement("div");s.innerHTML=o,e.appendChild(s);for(let t=s.childNodes.length-1;t>=0;t--)"svg"!==s.childNodes[t].nodeName.toLowerCase()&&s.removeChild(s.childNodes[t]);const r=s.firstElementChild;if(r&&"svg"===r.nodeName.toLowerCase()&&(i&&r.setAttribute("class",i),isValid(r)))return s.innerHTML}return""}function createColorClasses(t){return t?{"ion-color":!0,[`ion-color-${t}`]:!0}:null}export{Icon as IonIcon};
+import { h } from '../ionicons.core.js';
+
+import { a as getName, b as isSrc, c as getSrc, d as getIconMap, e as isValid } from './chunk-1ca7e569.js';
+
+class Icon {
+    constructor() {
+        this.isVisible = false;
+        this.lazy = false;
+    }
+    componentWillLoad() {
+        this.waitUntilVisible(this.el, '50px', () => {
+            this.isVisible = true;
+            this.loadIcon();
+        });
+    }
+    componentDidUnload() {
+        if (this.io) {
+            this.io.disconnect();
+            this.io = undefined;
+        }
+    }
+    waitUntilVisible(el, rootMargin, cb) {
+        if (this.lazy && this.win && this.win.IntersectionObserver) {
+            const io = this.io = new this.win.IntersectionObserver((data) => {
+                if (data[0].isIntersecting) {
+                    io.disconnect();
+                    this.io = undefined;
+                    cb();
+                }
+            }, { rootMargin });
+            io.observe(el);
+        }
+        else {
+            cb();
+        }
+    }
+    loadIcon() {
+        if (!this.isServer && this.isVisible) {
+            const url = this.getUrl();
+            if (url) {
+                getSvgContent(this.doc, url, 's-ion-icon')
+                    .then(svgContent => this.svgContent = svgContent);
+            }
+            else {
+                console.error('icon was not resolved');
+            }
+        }
+        if (!this.ariaLabel) {
+            const name = getName(this.getName(), this.mode, this.ios, this.md);
+            if (name) {
+                this.ariaLabel = name
+                    .replace('ios-', '')
+                    .replace('md-', '')
+                    .replace(/\-/g, ' ');
+            }
+        }
+    }
+    getName() {
+        if (this.name !== undefined) {
+            return this.name;
+        }
+        if (this.icon && !isSrc(this.icon)) {
+            return this.icon;
+        }
+        return undefined;
+    }
+    getUrl() {
+        let url = getSrc(this.src);
+        if (url) {
+            return url;
+        }
+        url = getName(this.getName(), this.mode, this.ios, this.md);
+        if (url) {
+            return this.getNamedUrl(url);
+        }
+        url = getSrc(this.icon);
+        if (url) {
+            return url;
+        }
+        return null;
+    }
+    getNamedUrl(name) {
+        const url = getIconMap().get(name);
+        if (url) {
+            return url;
+        }
+        return `${this.resourcesUrl}svg/${name}.svg`;
+    }
+    hostData() {
+        const mode = this.mode || 'md';
+        const flipRtl = this.flipRtl || (this.ariaLabel && this.ariaLabel.indexOf('arrow') > -1 && this.flipRtl !== false);
+        return {
+            'role': 'img',
+            class: Object.assign({ [`${mode}`]: true }, createColorClasses(this.color), { [`icon-${this.size}`]: !!this.size, 'flip-rtl': flipRtl && this.doc.dir === 'rtl' })
+        };
+    }
+    render() {
+        if (!this.isServer && this.svgContent) {
+            return h("div", { class: "icon-inner", innerHTML: this.svgContent });
+        }
+        return h("div", { class: "icon-inner" });
+    }
+    static get is() { return "ion-icon"; }
+    static get encapsulation() { return "shadow"; }
+    static get properties() { return {
+        "ariaLabel": {
+            "type": String,
+            "attr": "aria-label",
+            "reflectToAttr": true,
+            "mutable": true
+        },
+        "color": {
+            "type": String,
+            "attr": "color"
+        },
+        "doc": {
+            "context": "document"
+        },
+        "el": {
+            "elementRef": true
+        },
+        "flipRtl": {
+            "type": Boolean,
+            "attr": "flip-rtl"
+        },
+        "icon": {
+            "type": String,
+            "attr": "icon",
+            "watchCallbacks": ["loadIcon"]
+        },
+        "ios": {
+            "type": String,
+            "attr": "ios"
+        },
+        "isServer": {
+            "context": "isServer"
+        },
+        "isVisible": {
+            "state": true
+        },
+        "lazy": {
+            "type": Boolean,
+            "attr": "lazy"
+        },
+        "md": {
+            "type": String,
+            "attr": "md"
+        },
+        "mode": {
+            "type": String,
+            "attr": "mode"
+        },
+        "name": {
+            "type": String,
+            "attr": "name",
+            "watchCallbacks": ["loadIcon"]
+        },
+        "resourcesUrl": {
+            "context": "resourcesUrl"
+        },
+        "size": {
+            "type": String,
+            "attr": "size"
+        },
+        "src": {
+            "type": String,
+            "attr": "src",
+            "watchCallbacks": ["loadIcon"]
+        },
+        "svgContent": {
+            "state": true
+        },
+        "win": {
+            "context": "window"
+        }
+    }; }
+    static get style() { return ":host{display:inline-block;width:1em;height:1em;contain:strict;fill:currentColor;-webkit-box-sizing:content-box!important;box-sizing:content-box!important}.icon-inner,svg{display:block;height:100%;width:100%}:host(.flip-rtl) .icon-inner{-webkit-transform:scaleX(-1);transform:scaleX(-1)}:host(.icon-small){font-size:18px!important}:host(.icon-large){font-size:32px!important}:host(.ion-color){color:var(--ion-color-base)!important}:host(.ion-color-primary){--ion-color-base:var(--ion-color-primary,#3880ff)}:host(.ion-color-secondary){--ion-color-base:var(--ion-color-secondary,#0cd1e8)}:host(.ion-color-tertiary){--ion-color-base:var(--ion-color-tertiary,#f4a942)}:host(.ion-color-success){--ion-color-base:var(--ion-color-success,#10dc60)}:host(.ion-color-warning){--ion-color-base:var(--ion-color-warning,#ffce00)}:host(.ion-color-danger){--ion-color-base:var(--ion-color-danger,#f14141)}:host(.ion-color-light){--ion-color-base:var(--ion-color-light,#f4f5f8)}:host(.ion-color-medium){--ion-color-base:var(--ion-color-medium,#989aa2)}:host(.ion-color-dark){--ion-color-base:var(--ion-color-dark,#222428)}"; }
+}
+const requests = new Map();
+function getSvgContent(doc, url, scopedId) {
+    let req = requests.get(url);
+    if (!req) {
+        req = fetch(url, { cache: 'force-cache' }).then(rsp => {
+            if (isStatusValid(rsp.status)) {
+                return rsp.text();
+            }
+            return Promise.resolve(null);
+        }).then(svgContent => validateContent(doc, svgContent, scopedId));
+        requests.set(url, req);
+    }
+    return req;
+}
+function isStatusValid(status) {
+    return status <= 299;
+}
+function validateContent(document, svgContent, scopeId) {
+    if (svgContent) {
+        const frag = document.createDocumentFragment();
+        const div = document.createElement('div');
+        div.innerHTML = svgContent;
+        frag.appendChild(div);
+        for (let i = div.childNodes.length - 1; i >= 0; i--) {
+            if (div.childNodes[i].nodeName.toLowerCase() !== 'svg') {
+                div.removeChild(div.childNodes[i]);
+            }
+        }
+        const svgElm = div.firstElementChild;
+        if (svgElm && svgElm.nodeName.toLowerCase() === 'svg') {
+            if (scopeId) {
+                svgElm.setAttribute('class', scopeId);
+            }
+            if (isValid(svgElm)) {
+                return div.innerHTML;
+            }
+        }
+    }
+    return '';
+}
+function createColorClasses(color) {
+    return (color) ? {
+        'ion-color': true,
+        [`ion-color-${color}`]: true
+    } : null;
+}
+
+export { Icon as IonIcon };

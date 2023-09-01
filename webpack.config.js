@@ -1,8 +1,9 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 
 const path = require('path')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 // function generateHtmlPlugins (templateDir) {
 //     const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir))
@@ -24,8 +25,8 @@ module.exports =  {
 
     mode: 'development',
     entry: {
-        dashboard: './src/assets/js/demo_1/dashboard.js',
-        // scss: './src/assets/scss/demo_1/style.scss'
+        // dashboard: './src/assets/js/demo_1/dashboard.js',
+        main: './src/entry.js'
     },
     output: {
         filename: '[name].js',
@@ -41,6 +42,7 @@ module.exports =  {
             return `${filepath}/[name].[ext]`
         },
     },
+    devtool: 'source-map',
     devServer: {
         static: {
             directory: path.resolve(__dirname, "dist"),
@@ -80,7 +82,7 @@ module.exports =  {
             template: 'src/index.html',
         }),
         new MiniCssExtractPlugin({
-            filename: "assets/css/[name].css",
+            filename: "assets/css/shared/style.css",
             chunkFilename: 'chunk-[id].css',
         }),
         new CopyPlugin({
@@ -104,7 +106,11 @@ module.exports =  {
             ],
             
         })
-    ]
+    ],
     // .concat(htmlPlugins)
-
+    optimization: {
+        minimizer: [
+            new CssMinimizerPlugin(),
+        ]
+    }
 }

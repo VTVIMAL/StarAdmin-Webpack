@@ -1,2 +1,0 @@
-/*! https://github.com/WebReflection/es6-collections
-(C) Andrea Giammarchi - @WebReflection - Mit Style License */

@@ -1,1 +1,8 @@
-!function(a){"use strict";a((function(){a('[data-toggle="offcanvas"]').on("click",(function(){a(".sidebar-offcanvas").toggleClass("active")}))}))}(jQuery);
+(function ($) {
+  'use strict';
+  $(function () {
+    $('[data-toggle="offcanvas"]').on("click", function () {
+      $('.sidebar-offcanvas').toggleClass('active')
+    });
+  });
+})(jQuery);

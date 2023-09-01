@@ -1,1 +1,70 @@
-let CACHED_MAP;export function getIconMap(){if(!CACHED_MAP){const t=window;t.Ionicons=t.Ionicons||{},CACHED_MAP=t.Ionicons.map=t.Ionicons.map||new Map}return CACHED_MAP}export function addIcons(t){const e=getIconMap();Object.keys(t).forEach((o=>{e.set(o,t[o])}))}export function getName(t,e,o,n){return e="ios"===(e=(e||"md").toLowerCase())?"ios":"md",o&&"ios"===e?t=o.toLowerCase():n&&"md"===e?t=n.toLowerCase():t&&(t=t.toLowerCase(),/^md-|^ios-|^logo-/.test(t)||(t=`${e}-${t}`)),"string"!=typeof t||""===t.trim()||""!==t.replace(/[a-z]|-|\d/gi,"")?null:t}export function getSrc(t){return"string"==typeof t&&isSrc(t=t.trim())?t:null}export function isSrc(t){return t.length>0&&/(\/|\.)/.test(t)}export function isValid(t){if(1===t.nodeType){if("script"===t.nodeName.toLowerCase())return!1;for(let e=0;e<t.attributes.length;e++){const o=t.attributes[e].value;if("string"==typeof o&&0===o.toLowerCase().indexOf("on"))return!1}for(let e=0;e<t.childNodes.length;e++)if(!isValid(t.childNodes[e]))return!1}return!0}
+let CACHED_MAP;
+export function getIconMap() {
+    if (!CACHED_MAP) {
+        const win = window;
+        win.Ionicons = win.Ionicons || {};
+        CACHED_MAP = win.Ionicons.map = win.Ionicons.map || new Map();
+    }
+    return CACHED_MAP;
+}
+export function addIcons(icons) {
+    const map = getIconMap();
+    Object.keys(icons).forEach(name => {
+        map.set(name, icons[name]);
+    });
+}
+export function getName(name, mode, ios, md) {
+    mode = (mode || 'md').toLowerCase();
+    mode = mode === 'ios' ? 'ios' : 'md';
+    if (ios && mode === 'ios') {
+        name = ios.toLowerCase();
+    }
+    else if (md && mode === 'md') {
+        name = md.toLowerCase();
+    }
+    else if (name) {
+        name = name.toLowerCase();
+        if (!/^md-|^ios-|^logo-/.test(name)) {
+            name = `${mode}-${name}`;
+        }
+    }
+    if (typeof name !== 'string' || name.trim() === '') {
+        return null;
+    }
+    const invalidChars = name.replace(/[a-z]|-|\d/gi, '');
+    if (invalidChars !== '') {
+        return null;
+    }
+    return name;
+}
+export function getSrc(src) {
+    if (typeof src === 'string') {
+        src = src.trim();
+        if (isSrc(src)) {
+            return src;
+        }
+    }
+    return null;
+}
+export function isSrc(str) {
+    return str.length > 0 && /(\/|\.)/.test(str);
+}
+export function isValid(elm) {
+    if (elm.nodeType === 1) {
+        if (elm.nodeName.toLowerCase() === 'script') {
+            return false;
+        }
+        for (let i = 0; i < elm.attributes.length; i++) {
+            const val = elm.attributes[i].value;
+            if (typeof val === 'string' && val.toLowerCase().indexOf('on') === 0) {
+                return false;
+            }
+        }
+        for (let i = 0; i < elm.childNodes.length; i++) {
+            if (!isValid(elm.childNodes[i])) {
+                return false;
+            }
+        }
+    }
+    return true;
+}

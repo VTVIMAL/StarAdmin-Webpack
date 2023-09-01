@@ -1,4 +1,0 @@
-/*!
- * ionicons: Core, es2017
- * Built with http://stenciljs.com
- */

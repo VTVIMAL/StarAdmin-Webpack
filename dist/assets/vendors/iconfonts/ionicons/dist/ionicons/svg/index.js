@@ -1,1 +1,2 @@
-require.context("!!file-loader?name=[name].[ext]&outputPath=svg!./",!1,/.svg$/);
+
+require.context('!!file-loader?name=[name].[ext]&outputPath=svg!./', false, /.svg$/);
