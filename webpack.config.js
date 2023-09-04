@@ -32,14 +32,15 @@ module.exports =  {
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
         clean: true,
-        publicPath: '',
+        // assetModuleFilename:'[name][ext]',
+        // publicPath: '',
         assetModuleFilename: (pathData) => {
             const filepath = path
                 .dirname(pathData.filename)
                 .split("/")
                 .slice(1)
                 .join("/")
-            return `${filepath}/[name].[ext]`
+            return `${filepath}/[name][ext]`
         },
     },
     devtool: 'source-map',
@@ -71,6 +72,9 @@ module.exports =  {
             {
                 test: /\.(png|jpg|jpeg|svg|gif)$/i,
                 type: 'asset/resource',
+                // generator: {
+                //     filename: 'assets/images/[name][ext]'
+                // }
                 
             },
         ]
