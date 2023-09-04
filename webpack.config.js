@@ -26,7 +26,7 @@ module.exports =  {
     mode: 'development',
     entry: {
         // dashboard: './src/assets/js/demo_1/dashboard.js',
-        main: './src/entry.js'
+        main: './src/entry.js',
     },
     output: {
         filename: '[name].js',
@@ -48,7 +48,7 @@ module.exports =  {
         static: {
             directory: path.resolve(__dirname, "dist"),
         },
-        port: 3000,
+        port: 3008,
         open: true,
         hot: true,
         compress: true,
@@ -87,6 +87,10 @@ module.exports =  {
         }),
         new MiniCssExtractPlugin({
             filename: "assets/css/shared/style.css",
+            chunkFilename: 'chunk-[id].css',
+        }),
+        new MiniCssExtractPlugin({
+            filename: "assets/css/demo_1/style.css",
             chunkFilename: 'chunk-[id].css',
         }),
         new CopyPlugin({
