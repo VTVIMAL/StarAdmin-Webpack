@@ -1,4 +1,4 @@
-// import '../../scss/demo_1/style.scss'
+import '../../scss/demo_1/style.scss'
 // import '../../scss/shared/style.scss'
 
 (function ($) {
